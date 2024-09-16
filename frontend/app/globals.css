@@ -93,3 +93,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.swal2-popup {
+  background-color: white;
+  color: black;
+}
+
+.dark .swal2-popup {
+  background-color: #1f2937; /* gray-800 */
+  color: white;
+}

@@ -15,7 +15,7 @@ export function Form({
           htmlFor="email"
           className="block text-xs text-gray-600 dark:text-gray-400 uppercase"
         >
-          Email Address
+          Correo electrónico
         </label>
         <input
           id="email"
@@ -24,7 +24,7 @@ export function Form({
           placeholder="user@acme.com"
           autoComplete="email"
           required
-          className="mt-1 block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:border-black dark:focus:border-white focus:outline-none focus:ring-black dark:focus:ring-white sm:text-sm"
+          className="mt-1 block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:border-black dark:focus:border-white focus:outline-none focus:ring-black dark:focus:ring-white sm:text-sm text-black"
         />
       </div>
       <div>
@@ -32,14 +32,14 @@ export function Form({
           htmlFor="password"
           className="block text-xs text-gray-600 dark:text-gray-400 uppercase"
         >
-          Password
+          Contraseña
         </label>
         <input
           id="password"
           name="password"
           type="password"
           required
-          className="mt-1 block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:border-black dark:focus:border-white focus:outline-none focus:ring-black dark:focus:ring-white sm:text-sm"
+          className="mt-1 block w-full appearance-none rounded-md border border-gray-300 dark:border-gray-700 px-3 py-2 placeholder-gray-400 dark:placeholder-gray-500 shadow-sm focus:border-black dark:focus:border-white focus:outline-none focus:ring-black dark:focus:ring-white sm:text-sm text-black"
         />
       </div>
       {children}

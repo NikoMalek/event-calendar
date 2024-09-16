@@ -8,7 +8,7 @@ const { Schema } = new DBLocal({ path: './userdb' });
 // Aqui se define el esquema de usuario
 const userSchema = z.object({
   username: z.string().min(1, 'username must be a non-empty string'),
-  password: z.string().min(3, 'password must be at least 3 characters long')
+  password: z.string().min(3, 'La contraseña debe tener al menos 3 caracteres')
 });
 
 
@@ -32,7 +32,7 @@ export class UserDB {
 
     const user = User.findOne ({ username })
     if (user) {
-      throw new Error('username already exists')
+      throw new Error('El correo electronico ya esta registrado')
     }
 
     // crear id
@@ -58,10 +58,10 @@ export class UserDB {
     }
 
     const user = User.findOne({ username })
-    if (!user) { throw new Error('username does not exist') }
+    if (!user) { throw new Error('El correo electronico no existe') }
 
     const isValidPassword = await bcrypt.compare(password, user.password)
-    if (!isValidPassword) { throw new Error('invalid password') }
+    if (!isValidPassword) { throw new Error('Contraseña Incorrecta') }
 
     const { password: _, ...publicUser } = user
     // const { _id,password: _, ...publicUser } = user
