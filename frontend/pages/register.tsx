@@ -1,4 +1,4 @@
-import { useDarkMode } from '../lib/useDarkMode';
+// import { useDarkMode } from '../lib/useDarkMode';
 import Link from 'next/link';
 import { Form } from '../components/form';
 import { useRouter } from 'next/router';
@@ -51,10 +51,13 @@ export default function Register({isDarkMode, toggleDarkMode}: RegisterProps) {
       router.push('/login');
     } catch (error) {
       console.error('Error registering user:', error.message);
+      const errorMessage = error.message === 'Failed to fetch' 
+      ? 'Error de conexión con el servidor' 
+      : error.message;
       MySwal.fire({
         icon: "warning",
         title: "Error",
-        text: error.message,
+        text: errorMessage,
         confirmButtonText: "Aceptar ",
         customClass: {
           popup: isDarkMode ? 'dark' : '',

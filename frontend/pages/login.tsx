@@ -45,11 +45,14 @@ export default function Login({ isDarkMode, toggleDarkMode }: LoginProps) {
         router.push('/dashboard');
       }
     } catch (error) {
-      console.error('Error logging in:', error.message);
+      console.error('Error logging in:', error);
+      const errorMessage = error.message === 'Failed to fetch' 
+      ? 'Error de conexión con el servidor' 
+      : error.message;
       MySwal.fire({
         icon: "error",
         title: "Error",
-        text: error.message,
+        text: errorMessage,
         confirmButtonText: "Aceptar",
         customClass: {
           popup: isDarkMode ? 'dark' : '',

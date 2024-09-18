@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser'
 import { PORT, SECRET_JWT_KEY, FRONTEND_URL } from './config.js'
 import { UserDB } from './user-db.js'
 import cors from 'cors';
+import sequelize from './db.js';
+import './models/User.js';
 
 
 
@@ -36,10 +38,9 @@ app.get('/', (req, res) => {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body
   
-  console.log(req.body)
   try {
     const user = await UserDB.login({ username, password })
-    const token = jwt.sign({ id: user._id, username: user.username },SECRET_JWT_KEY, { 
+    const token = jwt.sign({ id: user.ID_USER, username: user.username },SECRET_JWT_KEY, { 
       expiresIn: '1h' 
     })
     res
@@ -59,7 +60,6 @@ app.post('/login', async (req, res) => {
 
 app.post('/register', async (req, res) => {
   const { username, password } = req.body
-  console.log(req.body)
 
   try{
     const id = await UserDB.create({ username, password })
@@ -91,3 +91,7 @@ app.get('/protected', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
+
+sequelize.sync().then(() => {
+  console.log('Database & tables created!');
+});
