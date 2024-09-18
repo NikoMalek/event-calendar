@@ -1,10 +1,23 @@
 import '../app/globals.css'
 import Image from "next/image";
+import { useRouter } from 'next/router';
 
 
 export default function Home() {
+  const router = useRouter();
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <div className="absolute top-4 right-4">
+        <button
+          className="p-2 bg-green-500 text-white hover:bg-green-600 dark:bg-blue-500 rounded-full dark:text-white dark:hover:bg-blue-600"
+          onClick={() => {
+            console.log("Iniciar sesión");
+            router.push('/login');
+          }}
+        >
+          Iniciar sesión
+        </button>
+      </div>
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"

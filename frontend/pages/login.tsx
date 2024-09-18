@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+// import { useDarkMode } from '../lib/useDarkMode';  
 import Link from 'next/link';
 import { Form } from '../components/form';
 // import { signIn } from 'app/auth';
@@ -6,40 +6,24 @@ import { SubmitButton } from '../components/submit-button';
 import '../app/globals.css'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { useRouter } from 'next/router';
 
 const MySwal = withReactContent(Swal)
 
-export default function Login() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  
-  useEffect(() => {
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme');
+interface LoginProps {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
 
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
-    } else {
-      setIsDarkMode(systemPrefersDark);
-    }
-  }, []);
+export default function Login({ isDarkMode, toggleDarkMode }: LoginProps) {
+  // const {isDarkMode, toggleDarkMode} = useDarkMode();
+  const router = useRouter();
 
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDarkMode]);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
   
   async function login(formData: FormData) {
     const username = formData.get('email') as string;
     const password = formData.get('password') as string;
+
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login`, {
@@ -47,6 +31,7 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ username, password }),
       });
 
@@ -55,16 +40,10 @@ export default function Login() {
       }
 
       const data = await response.json();
-      console.log('User logged in with ID:', data._id);
-      MySwal.fire({
-        icon: "success",
-        title: "Acceso concedido",
-        text: "Usuario logueado con éxito",
-        confirmButtonText: "Aceptar",
-        customClass: {
-          popup: isDarkMode ? 'dark' : '',
-        }
-      })
+      console.log('User logged in with ID:', data.user._id);
+      if (response.status === 200) {
+        router.push('/dashboard');
+      }
     } catch (error) {
       console.error('Error logging in:', error.message);
       MySwal.fire({

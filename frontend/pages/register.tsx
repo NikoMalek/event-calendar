@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useDarkMode } from '../lib/useDarkMode';
 import Link from 'next/link';
 import { Form } from '../components/form';
 import { useRouter } from 'next/router';
@@ -9,36 +9,16 @@ import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 
 
-export default function Register() {
+interface RegisterProps {
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+export default function Register({isDarkMode, toggleDarkMode}: RegisterProps) {
   
   const router = useRouter();
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
-  useEffect(() => {
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme');
-
-    if (savedTheme) {
-      setIsDarkMode(savedTheme === 'dark');
-    } else {
-      setIsDarkMode(systemPrefersDark);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  }, [isDarkMode]);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
 
   async function register(formData: FormData) {
     const username = formData.get('email') as string;
